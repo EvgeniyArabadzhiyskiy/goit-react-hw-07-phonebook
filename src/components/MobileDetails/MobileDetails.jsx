@@ -13,13 +13,18 @@ import {
   useDeleteContactMutation,
   useToggleFavoritesMutation,
 } from 'redux/contacts/servises/contactAPI';
+import { useDispatch } from 'react-redux';
+import { filteredContacts } from 'redux/contacts/contacts-actions';
 
 const MobileDetails = ({ id, number, favorites }) => {
+  const dispatch = useDispatch();
+
   const [toggleFavorites_RTKQ] = useToggleFavoritesMutation();
   const [deleteContact_RTKQ, { isLoading }] = useDeleteContactMutation();
 
   const onDeleteContact = id => {
     deleteContact_RTKQ(id);
+    dispatch(filteredContacts(''));
   };
 
   const toggleContact = ({ id, favorites }) => {
