@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 
 // import logger from 'redux-logger';
 import {
@@ -15,7 +15,6 @@ import storage from 'redux-persist/lib/storage';
 
 import contactsReducers from './contacts/contacts-reducers';
 import { contactApi } from './contacts/servises/contactAPI';
-// console.log("contactApi", contactApi);
 
 const contactPersistConfig = {
   key: 'contact',
@@ -23,7 +22,7 @@ const contactPersistConfig = {
   blacklist: ['filter', 'items'],
 };
 
-const middleware = [
+const middleware = getDefaultMiddleware => [
   ...getDefaultMiddleware({
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
