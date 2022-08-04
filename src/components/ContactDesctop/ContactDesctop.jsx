@@ -1,11 +1,17 @@
 import { AiFillHeart } from 'react-icons/ai';
 import { ImUserMinus } from 'react-icons/im';
 import { FaRegUserCircle } from 'react-icons/fa';
+import { BsTelephoneOutbound } from 'react-icons/bs';
 
 import { Box } from 'components/Box/Box';
 import Button from 'components/Button/Button';
 import { Spinner } from 'components/Spinner/Spinner';
-import { CheckBoxLabel, UserName, UserNumber } from './ContactDesctop.styled';
+import {
+  CallLink,
+  CheckBoxLabel,
+  UserName,
+  UserNumber,
+} from './ContactDesctop.styled';
 
 import {
   useDeleteContactMutation,
@@ -16,7 +22,7 @@ import { filteredContacts } from 'redux/contacts/contacts-actions';
 
 const ContactDesctop = ({ id, name, number, favorites }) => {
   const dispatch = useDispatch();
-  
+
   const [toggleFavorites_RTKQ] = useToggleFavoritesMutation();
   const [deleteContact_RTKQ, { isLoading }] = useDeleteContactMutation();
 
@@ -24,13 +30,12 @@ const ContactDesctop = ({ id, name, number, favorites }) => {
     deleteContact_RTKQ(id);
     dispatch(filteredContacts(''));
 
-
     // dispatch(deleteContact(id));
   };
 
   const toggleContact = ({ id, favorites }) => {
     toggleFavorites_RTKQ({ id, favorites });
-    
+
     // dispatch(toggleFavoritContact({ id, favorites }));
   };
 
@@ -56,10 +61,18 @@ const ContactDesctop = ({ id, name, number, favorites }) => {
 
         <UserName>{name}:</UserName>
         <UserNumber>{number}</UserNumber>
-        <Button onClick={() => onDeleteContact(id)} disabled={isLoading}>
-          {isLoading ? <Spinner size={14} /> : <ImUserMinus size={14} />}
-          Delete
-        </Button>
+        <Box display="flex">
+          <CallLink>
+            <a href={`tel:${number}`}>
+              <BsTelephoneOutbound size={14} />
+              <span>Call</span>
+            </a>
+          </CallLink>
+          <Button onClick={() => onDeleteContact(id)} disabled={isLoading}>
+            {isLoading ? <Spinner size={14} /> : <ImUserMinus size={14} />}
+            Delete
+          </Button>
+        </Box>
       </Box>
     </>
   );

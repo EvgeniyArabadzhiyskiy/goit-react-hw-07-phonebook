@@ -19,8 +19,11 @@ export const StyledButton = styled.button`
     background-color: ${prop => prop.theme.colors.hover};
   }
 
-  svg{
-    margin-right: ${prop => prop.theme.space[2]}px;
-    vertical-align: bottom;
+  svg {
+    @media screen and (min-width: 768px) {
+      margin-right: ${prop => prop.theme.space[2]}px;
+      vertical-align: bottom;
+    }
   }
 `;
+/* width: ${prop => (prop.width ? `${prop.width}px` : null)}; */

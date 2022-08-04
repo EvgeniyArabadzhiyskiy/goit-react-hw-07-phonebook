@@ -5,6 +5,7 @@ import { Box } from 'components/Box/Box';
 import Button from 'components/Button/Button';
 import { Spinner } from 'components/Spinner/Spinner';
 import {
+  CallLink,
   CheckBoxLabel,
   UserNumber,
 } from 'components/ContactDesctop/ContactDesctop.styled';
@@ -15,6 +16,7 @@ import {
 } from 'redux/contacts/servises/contactAPI';
 import { useDispatch } from 'react-redux';
 import { filteredContacts } from 'redux/contacts/contacts-actions';
+import { HiOutlinePhoneIncoming } from 'react-icons/hi';
 
 const MobileDetails = ({ id, number, favorites }) => {
   const dispatch = useDispatch();
@@ -34,7 +36,6 @@ const MobileDetails = ({ id, number, favorites }) => {
   return (
     <>
       <Box display="flex" justifyContent="space-evenly" alignItems="center">
-
         <CheckBoxLabel>
           <input
             type="checkbox"
@@ -46,11 +47,16 @@ const MobileDetails = ({ id, number, favorites }) => {
 
         <UserNumber>{number}</UserNumber>
 
-        <Button onClick={() => onDeleteContact(id)} disabled={isLoading}>
-          {isLoading ? <Spinner size={14} /> : <ImUserMinus size={14} />}
-          Delete
-        </Button>
-        
+        <Box display="flex">
+          <CallLink>
+            <a href={`tel:${number}`}>
+              <HiOutlinePhoneIncoming size={24} />
+            </a>
+          </CallLink>
+          <Button onClick={() => onDeleteContact(id)} disabled={isLoading}>
+            {isLoading ? <Spinner size={24} /> : <ImUserMinus size={24} />}
+          </Button>
+        </Box>
       </Box>
     </>
   );

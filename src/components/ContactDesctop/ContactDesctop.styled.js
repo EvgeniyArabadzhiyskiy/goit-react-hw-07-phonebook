@@ -29,3 +29,21 @@ export const CheckBoxLabel = styled.label`
     fill: ${p => p.theme.colors.primaryBtn};
   }
 `;
+
+export const CallLink = styled.div`
+  margin-right: ${prop => prop.theme.space[3]}px;
+  color: ${p => p.theme.colors.white};
+  border: ${prop => prop.theme.borders.none};
+  border-radius: ${prop => prop.theme.radii.normal};
+  padding: ${prop => prop.theme.space[2]}px ${prop => prop.theme.space[3]}px;
+  background-color: ${prop => prop.theme.colors.primaryBtn};
+  transition: background-color 300ms linear;
+
+  &:hover {
+    background-color: ${prop => prop.theme.colors.hover};
+  }
+
+  span {
+    margin-left: ${prop => prop.theme.space[3]}px;
+  }
+`;
