@@ -2,11 +2,11 @@ import { StyledInput } from './Filtercontacts.styled';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { filteredContacts } from 'redux/contacts/contacts-actions';
-import { contactsSelectors } from 'redux/contacts/contacts-selectors';
+import { getFilter } from 'redux/contacts/contacts-selectors';
 
 const FilterContacts = () => {
   const dispatch = useDispatch();
-  const filterValue = useSelector(contactsSelectors.getFilter);
+  const filterValue = useSelector(getFilter);
 
   const onChangeInput = e => {
     dispatch(filteredContacts(e.target.value));
