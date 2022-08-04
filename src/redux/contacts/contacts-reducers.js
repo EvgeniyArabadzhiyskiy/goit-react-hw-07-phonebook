@@ -1,6 +1,35 @@
 import { combineReducers } from 'redux';
-import { createReducer } from '@reduxjs/toolkit';
-import {filteredContacts} from './contacts-actions';
+import { createAction, createReducer } from '@reduxjs/toolkit';
+import { filteredContacts } from './contacts-actions';
+
+const filterReducer = createReducer('', {
+  [filteredContacts]: (_state, { payload }) => payload,
+});
+
+export const increment = createAction('counter/INCREMENT');
+
+const counter = createReducer(0, {
+  [increment]: state => state + 1,
+});
+
+export default combineReducers({
+  filter: filterReducer,
+  counter,
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import { fetchAllContacts, addContact, deleteContact, toggleFavoritContact } from './contacts-operations';
 
 // const contactsReducer = createReducer([], {
@@ -41,25 +70,6 @@ import {filteredContacts} from './contacts-actions';
 //   [toggleFavoritContact.rejected]: (_, {payload}) => payload,
 //   [toggleFavoritContact.pending]: () => null,
 // })
-
-const filterReducer = createReducer('', {
-  [filteredContacts]: (_state, { payload }) => payload,
-});
-
-export default combineReducers({
-  // items: contactsReducer,
-  filter: filterReducer,
-  // isLoading: loadingReducer,
-  // error: errorReducer,
-});
-
-
-
-
-
-
-
-
 
 // const contactsReducer = createReducer([], builder => {
 //   builder
