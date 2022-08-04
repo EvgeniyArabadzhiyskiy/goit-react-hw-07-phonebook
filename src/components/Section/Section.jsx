@@ -4,7 +4,7 @@ import { SectionTitle } from './Section.styled';
 
 const Section = ({ title, children }) => {
   return (
-    <Box bg="primary" width="800px" m="0 auto" p={4} textAlign="center" as="section">
+    <Box   m="0 auto" p={4} textAlign="center" as="section">
 
       {title && <SectionTitle>{title}</SectionTitle>}
       {children}

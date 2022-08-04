@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Overlay } from './Overlay';
+import { ModalWindow, Overlay, } from './Overlay';
 
 const modalRoot = document.getElementById('modal-root');
 
@@ -15,15 +15,17 @@ const Modal = ({ children, closeModal }) => {
 
   useEffect(() => {
     window.addEventListener('keydown', closeModalOnEsc);
+    document.body.style.overflow = 'hidden';
 
     return () => {
       window.removeEventListener('keydown', closeModalOnEsc);
+      document.body.style.overflow = 'unset';
     };
   });
 
   return createPortal(
     <Overlay onClick={closeOnBackdrop}>
-      <div className="Modal">{children}</div>
+      <ModalWindow >{children}</ModalWindow>
     </Overlay>,
     modalRoot
   );

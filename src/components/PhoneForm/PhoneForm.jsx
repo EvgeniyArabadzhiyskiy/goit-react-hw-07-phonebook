@@ -7,15 +7,12 @@ import Button from 'components/Button/Button';
 import { StyledInput } from '../Input/Input.styled';
 import { FormLabel, StyledForm, StyledError } from './PhoneForm.styled';
 
-// import { useSelector } from 'react-redux';
-// import { useDispatch } from 'react-redux';
-// import { contactsSelectors } from 'redux/contacts/contacts-selectors';
-// import { addContact } from 'redux/contacts/contacts-operations';
-
 import {
   useAddContactMutation,
   useGetAllContactsQuery,
 } from 'redux/contacts/servises/contactAPI';
+import { Spinner } from 'components/Spinner/Spinner';
+import { Box } from 'components/Box/Box';
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -34,12 +31,9 @@ let contactShema = yup.object().shape({
     .matches(phoneRegExp, 'Phone number is not valid'),
 });
 
-const PhoneForm = () => {
-  // const dispatch = useDispatch();
-  // const items = useSelector(contactsSelectors.getItems);
-
+const PhoneForm = ({ onSaveAndClose }) => {
   const { data: items = [] } = useGetAllContactsQuery();
-  const [addContactRTKQ, { error }] = useAddContactMutation();
+  const [addContact_RTKQ, { isLoading, error }] = useAddContactMutation();
 
   const errorMessage = error?.status === 404 && 'Sorry, unable to add contact';
 
@@ -50,7 +44,7 @@ const PhoneForm = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(contactShema) });
 
-  const submitForm = (data, evt) => {
+  const submitForm = async (data, evt) => {
     const foundName = items.find(item => item.name === data.name);
 
     if (foundName) {
@@ -60,10 +54,11 @@ const PhoneForm = () => {
       });
     }
 
-    addContactRTKQ(data);
+    await addContact_RTKQ(data);
 
     // dispatch(addContact(data));
     reset();
+    onSaveAndClose();
   };
 
   const onError = (err, evt) => {
@@ -102,10 +97,14 @@ const PhoneForm = () => {
           />
           {errors.number && <StyledError>{errors.number.message}</StyledError>}
         </FormLabel>
-
-        <Button type="submit" width={185}>
-          Add contact
-        </Button>
+        <Box display="flex" justifyContent="space-around" width="100%">
+          <Button type="submit" disabled={isLoading} width={80}>
+            {isLoading && <Spinner size={16} />} Save
+          </Button>
+          <Button type="button" onClick={onSaveAndClose} width={80}>
+            Cancel
+          </Button>
+        </Box>
       </StyledForm>
       {error && (
         <h2 style={{ color: 'red' }}>
@@ -115,5 +114,6 @@ const PhoneForm = () => {
     </>
   );
 };
+
 
 export default PhoneForm;
