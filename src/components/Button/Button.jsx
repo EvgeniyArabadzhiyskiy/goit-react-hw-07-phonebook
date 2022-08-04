@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
 import { StyledButton } from './Button.styled';
 
-const Button = ({ type, children, width, onClick }) => {
+const Button = ({ type, children, width, disabled, onClick }) => {
   return (
-    <StyledButton type={type} width={width} onClick={onClick}>
+    <StyledButton type={type} width={width} onClick={onClick} disabled={disabled}>
       {children}
     </StyledButton>
   );
 };
 
 Button.defaultProps = {
+  disabled: false,
   type: 'button',
   children: null,
   width: null,
