@@ -6,7 +6,7 @@ import { useGetAllContactsQuery } from 'redux/contacts/servises/contactAPI';
 
 import Modal from './Modal/Modal';
 import Button from './Button/Button';
-import { Spinner } from './Spinner/Spinner';
+import Loader from './Loader/Loader';
 import Section from 'components/Section/Section';
 import Container from 'components/Container/Container';
 import PhoneForm from 'components/PhoneForm/PhoneForm';
@@ -41,12 +41,14 @@ const App = () => {
         </Section>
 
         <Section title="Contacts">
-          {isFetching && <Spinner size={28} />}
-          {contacts.length > 0 ? (
-            <ContactList />
-          ) : (
-            <h3 style={{ color: 'blue' }}>Phone book is empty</h3>
-          )}
+          <div style={{ position: 'relative' }}>
+            {isFetching && <Loader />}
+            {contacts.length > 0 ? (
+              <ContactList />
+            ) : (
+              <h3 style={{ color: 'blue' }}>Phone book is empty</h3>
+            )}
+          </div>
         </Section>
       </Container>
       <ToastContainer autoClose={3000} theme="colored" pauseOnHover />
